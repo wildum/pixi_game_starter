@@ -17,14 +17,14 @@ class Player {
             if (right.isDown) {
                 unit.dx = 0;
             } else {
-                unit.dx = -unit.speed;
+                unit.dx = -1;
             }
         };
         left.release = () => {
             if (!right.isDown) {
                 unit.dx = 0;
             } else {
-                unit.dx = unit.speed;
+                unit.dx = 1;
             }
         };
 
@@ -32,14 +32,14 @@ class Player {
             if (down.isDown) {
                 unit.dy = 0;
             } else {
-                unit.dy = -unit.speed;
+                unit.dy = -1;
             }
         };
         up.release = () => {
             if (!down.isDown) {
                 unit.dy = 0;
             } else {
-                unit.dy = unit.speed;
+                unit.dy = 1;
             }
         };
 
@@ -47,14 +47,14 @@ class Player {
             if (left.isDown) {
                 unit.dx = 0;
             } else {
-                unit.dx = unit.speed;
+                unit.dx = 1;
             }
         };
         right.release = () => {
             if (!left.isDown) {
                 unit.dx = 0;
             } else {
-                unit.dx = -unit.speed;
+                unit.dx = -1;
             }
         };
 
@@ -62,14 +62,14 @@ class Player {
             if (up.isDown) {
                 unit.dy = 0;
             } else {
-                unit.dy = unit.speed;
+                unit.dy = 1;
             }
         };
         down.release = () => {
             if (!up.isDown) {
                 unit.dy = 0;
             } else {
-                unit.dy = -unit.speed;
+                unit.dy = -1;
             }
         };
 

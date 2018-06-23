@@ -1,4 +1,4 @@
-var DEFAULT_SPEED = 10;
+var DEFAULT_SPEED = 5;
 
 function getUnitGraphics(radius, color) {
     var sprite = new PIXI.Sprite(discTexture);
@@ -37,8 +37,8 @@ class Unit {
             vx /= mag;
             vy /= mag;
         }
-        this.x += vx;
-        this.y += vy;
+        this.x += vx*this.speed;
+        this.y += vy*this.speed;
     }
 
 }

@@ -36,9 +36,11 @@ initTextures();
 let state;
 let player;
 let unit;
+let events;
 
 function setup() {
 
+  events = [];
   unit = new Unit(400, 200, 50, 10, 0xFF0000);
   player = new Player(unit);
 
@@ -55,6 +57,8 @@ function gameLoop(delta){
 
 function play(delta) {
   unit.move();
+  play_events();
+  events.length = 0;
 }
 
 document.getElementById("canvasZone").appendChild(app.view);

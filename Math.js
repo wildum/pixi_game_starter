@@ -44,3 +44,14 @@ class Vector {
         return this;
     }
 }
+
+/**
+ * Gets the number from [a;b] at percentage u
+ */
+function lerp(a, b, u) {
+    if (a <= b) {
+        return a + (b - a) * u;
+    } else {
+        return b + (a - b) * (1 - u);
+    }
+}

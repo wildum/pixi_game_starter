@@ -37,8 +37,21 @@ class Unit {
             vx /= mag;
             vy /= mag;
         }
-        this.x += vx*this.speed;
-        this.y += vy*this.speed;
+        
+        if (mag != 0) {
+
+            // x and y of unit at the end of the frame
+            let fx = this.x + vx*this.speed;
+            let fy = this.y + vy*this.speed;
+            var t = 1/this.speed;
+
+            // create several movement events for a continuous displacement
+            while (t <= 1.0) {
+                events.push(new EventMovement(this, t, lerp(this.x, fx, t), lerp(this.y, fy, t)));
+                t+=1/this.speed;
+            }
+
+        }
     }
 
 }

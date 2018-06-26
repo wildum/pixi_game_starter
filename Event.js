@@ -19,8 +19,13 @@ class EventMovement extends Event {
     }
 
     play() {
-        this.unit.x = this.x;
-        this.unit.y = this.y;
+
+        // if no collision move units
+        if (!check_wall_collisions(this.x, this.y, this.unit.radius)) {
+            this.unit.x = this.x;
+            this.unit.y = this.y;
+        }
+
     }
 
 }

@@ -20,8 +20,10 @@ var gameLayer = new PIXI.Container();
 app.stage.addChild(gameLayer);
 
 var unitLayer = new PIXI.Container();
+var wallLayer = new PIXI.Container();
 
 gameLayer.addChild(unitLayer);
+gameLayer.addChild(wallLayer);
 
 var discTexture;
 function initTextures() {
@@ -37,12 +39,16 @@ let state;
 let player;
 let unit;
 let events;
+let walls;
 
 function setup() {
 
   events = [];
+  walls = [];
+
   unit = new Unit(400, 200, 50, 10, 0xFF0000);
   player = new Player(unit);
+  walls.push(new Wall(100, 50, 200, 5));
 
   state = play;
  

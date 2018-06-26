@@ -17,13 +17,16 @@ class Wall {
         this.height = height;
     }
 
-    set x(v) { this.graphics.x = v; }
-    get x() { return this.graphics.x; }
-    set y(v) { this.graphics.y = v; }
-    get y() { return this.graphics.y; }
-    set width(v) { this.graphics.width = v; }
-    get width() { return this.graphics.width; }
-    set height(v) { this.graphics.height = v; }
-    get height() { return this.graphics.height; }
+}
 
+function check_wall_collisions(x, y, radius) {
+    for (var i = 0; i < walls.length; i++) {
+        if (x + radius > walls[i].x
+            && x - radius < walls[i].x + walls[i].width
+            && y + radius > walls[i].y
+            && y - radius < walls[i].y + walls[i].height) {
+                return true;
+        }
+    }
+    return false;
 }

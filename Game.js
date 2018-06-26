@@ -48,7 +48,7 @@ function setup() {
 
   unit = new Unit(400, 200, 50, 10, 0xFF0000);
   player = new Player(unit);
-  walls.push(new Wall(100, 50, 200, 5));
+  walls.push(new Wall(200, 100, 200, 10));
 
   state = play;
  

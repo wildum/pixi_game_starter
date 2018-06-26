@@ -37,6 +37,7 @@ initTextures();
 
 let state;
 let player;
+let units;
 let unit;
 let events;
 let walls;
@@ -45,9 +46,13 @@ function setup() {
 
   events = [];
   walls = [];
+  units = [];
 
   unit = new Unit(400, 200, 50, 10, 0xFF0000);
   player = new Player(unit);
+
+  units.push(unit);
+  units.push(new Unit(600, 200, 50, 10, 0x00FF00));
   walls.push(new Wall(200, 100, 200, 10));
 
   state = play;
@@ -62,7 +67,7 @@ function gameLoop(delta){
 }
 
 function play(delta) {
-  unit.move();
+  move_units();
   play_events();
   events.length = 0;
 }

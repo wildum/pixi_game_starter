@@ -55,3 +55,9 @@ class Unit {
     }
 
 }
+
+function move_units() {
+    units.forEach(unit => {
+        unit.move();
+    });
+}

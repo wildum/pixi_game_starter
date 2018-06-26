@@ -1,4 +1,4 @@
-var DEFAULT_SPEED = 5;
+var DEFAULT_SPEED = 3;
 
 function getUnitGraphics(radius, color) {
     var sprite = new PIXI.Sprite(discTexture);

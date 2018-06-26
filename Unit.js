@@ -11,12 +11,14 @@ function getUnitGraphics(radius, color) {
 }
 
 
-class Unit {
+class Unit extends Vector {
 
-    constructor(x, y, health, radius, color) {
+    constructor(id, x, y, health, radius, color) {
+        super(x, y);
         this.graphics = getUnitGraphics(radius, color);
-        this.x = x;
-        this.y = y;
+        this.graphics.x = x;
+        this.graphics.y = y;
+        this.id = id;
         this.dx = 0;
         this.dy = 0;
         this.radius = radius;
@@ -24,9 +26,9 @@ class Unit {
         this.health = health;
     }
 
-    set x(v) { this.graphics.x = v; }
+    set x(v) { if (this.graphics)this.graphics.x = v; }
     get x() { return this.graphics.x; }
-    set y(v) { this.graphics.y = v; }
+    set y(v) { if (this.graphics)this.graphics.y = v; }
     get y() { return this.graphics.y; }
 
     move() {
@@ -60,4 +62,13 @@ function move_units() {
     units.forEach(unit => {
         unit.move();
     });
+}
+
+function check_units_collisions(id, x, y, radius) {
+    for (var i = 0; i < units.length; i++) {
+        if (id != units[i].id && squareDist(x, y, units[i].x, units[i].y) < Math.pow(radius + units[i].radius, 2)) {
+                return true;
+        }
+    }
+    return false;
 }

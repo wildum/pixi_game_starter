@@ -21,9 +21,11 @@ app.stage.addChild(gameLayer);
 
 var unitLayer = new PIXI.Container();
 var wallLayer = new PIXI.Container();
+var bulletLayer = new PIXI.Container();
 
 gameLayer.addChild(unitLayer);
 gameLayer.addChild(wallLayer);
+gameLayer.addChild(bulletLayer);
 
 var discTexture;
 function initTextures() {
@@ -43,12 +45,16 @@ let units;
 let unit;
 let events;
 let walls;
+let bullets;
+let dead_bullets;
 
 function setup() {
 
   events = [];
   walls = [];
   units = [];
+  bullets = [];
+  dead_bullets = [];
 
   id_unit = 0;
 
@@ -71,7 +77,8 @@ function gameLoop(delta){
 }
 
 function play(delta) {
-  move_units();
+  update_units();
+  update_bullets();
   play_events();
   events.length = 0;
 }

@@ -3,8 +3,8 @@ const TIME_FRAME_MS = 1/60 * 1000
 
 class Event {
 
-    constructor(unit, t) {
-        this.unit = unit;
+    constructor(entity, t) {
+        this.entity = entity;
         this.t = t;
     }
 
@@ -12,19 +12,19 @@ class Event {
 
 class EventMovement extends Event {
 
-    constructor(unit, t, x, y) {
-        super(unit, t);
+    constructor(entity, t, x, y) {
+        super(entity, t);
         this.x = x;
         this.y = y;
     }
 
     play() {
 
-        // if no collision move units
-        if (!check_wall_collisions(this.x, this.y, this.unit.radius)
-            && !check_units_collisions(this.unit.id, this.x, this.y, this.unit.radius)) {
-            this.unit.x = this.x;
-            this.unit.y = this.y;
+        // if no collision move entitys
+        if (!check_wall_collisions(this.x, this.y, this.entity.radius)
+            && !check_units_collisions(this.entity.id, this.x, this.y, this.entity.radius)) {
+            this.entity.x = this.x;
+            this.entity.y = this.y;
         }
 
     }
@@ -44,7 +44,7 @@ function play_events() {
     let start_of_frame = t;
     let end_of_frame = t + TIME_FRAME_MS;
 
-    // a frame is splitted in 100 unit of t
+    // a frame is splitted in 100 entity of t
     while (t <= end_of_frame) {
 
         // play events if their time has come

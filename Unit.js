@@ -1,4 +1,4 @@
-var DEFAULT_SPEED = 3;
+const UNIT_DEFAULT_SPEED = 3;
 
 function getUnitGraphics(radius, color) {
     var sprite = new PIXI.Sprite(discTexture);
@@ -11,7 +11,7 @@ function getUnitGraphics(radius, color) {
 }
 
 
-class Unit extends Vector {
+class Unit extends MovableEntity {
 
     constructor(id, x, y, health, radius, color) {
         super(x, y);
@@ -19,17 +19,24 @@ class Unit extends Vector {
         this.graphics.x = x;
         this.graphics.y = y;
         this.id = id;
-        this.dx = 0;
-        this.dy = 0;
         this.radius = radius;
-        this.speed = DEFAULT_SPEED;
+        this.speed = UNIT_DEFAULT_SPEED;
         this.health = health;
+        this.weapon = new DefaultWeapon();
     }
 
     set x(v) { if (this.graphics)this.graphics.x = v; }
     get x() { return this.graphics.x; }
     set y(v) { if (this.graphics)this.graphics.y = v; }
     get y() { return this.graphics.y; }
+    set rotation(v) {if (this.graphics)this.graphics.rotation = v;}
+    get rotation() {return this.graphics.rotation;}
+      
+    update_orientation() {
+        var dist_X = app.renderer.plugins.interaction.mouse.global.x - this.x;
+        var dist_Y = app.renderer.plugins.interaction.mouse.global.y - this.y;
+        this.rotation = Math.atan2(dist_Y,dist_X);
+    }
 
     move() {
         let mag = Math.sqrt(this.dx*this.dx + this.dy*this.dy);
@@ -56,10 +63,17 @@ class Unit extends Vector {
         }
     }
 
+
+    
+    shoot(){
+        this.weapon.shoot(this.rotation, this.x+Math.cos(this.rotation)*20, this.y+Math.sin(this.rotation)*20);
+    }
+
 }
 
-function move_units() {
+function update_units() {
     units.forEach(unit => {
+        unit.update_orientation();
         unit.move();
     });
 }

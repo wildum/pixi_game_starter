@@ -16,7 +16,7 @@ function getBulletGraphics(radius, color) {
 
 class Bullet extends MovableEntity {
 
-    constructor(x, y, t, radius, color, orientation) {
+    constructor(x, y, t, radius, color, rotation) {
         super(x, y);
         this.graphics = getBulletGraphics(radius, color);
         this.t = t;
@@ -24,6 +24,7 @@ class Bullet extends MovableEntity {
         this.color = color;
         this.graphics.x = x;
         this.graphics.y = y;
+        this.rotation = rotation;
         this.speed = BULLET_DEFAULT_SPEED;
     }
 
@@ -61,10 +62,27 @@ class DefaultBullet extends Bullet {
     }
 }
 
+class BulletFactory {
+    static createDefaultBullet(x, y, rotation) {
+        let bullet;
+        if (dead_default_bullets.length != 0) {
+            bullet = dead_default_bullets.pop();
+            bullet.t = performance.now() + BULLET_DEFAULT_LIFETIME;
+            bullet.x = x;
+            bullet.y = y;
+            bullet.rotation = rotation;
+            bulletLayer.addChild(bullet.graphics);
+        } else {
+            bullet = new DefaultBullet(x, y, rotation);
+        }
+        return bullet;
+    }
+}
+
 function update_bullets() {
     for (var i = bullets.length-1; i >= 0; i--) {
         if (bullets[i].t - performance.now() < 0) {
-            dead_bullets.push(bullets[i]);
+            dead_default_bullets.push(bullets[i]);
             bulletLayer.removeChild(bullets[i].graphics);
             bullets.splice(i, 1);
         } else {

@@ -46,7 +46,7 @@ let unit;
 let events;
 let walls;
 let bullets;
-let dead_bullets;
+let dead_default_bullets;
 
 function setup() {
 
@@ -54,7 +54,7 @@ function setup() {
   walls = [];
   units = [];
   bullets = [];
-  dead_bullets = [];
+  dead_default_bullets = [];
 
   id_unit = 0;
 

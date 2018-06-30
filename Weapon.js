@@ -17,8 +17,7 @@ class DefaultWeapon extends Weapon {
     }
 
     shoot (rotation, x, y) {
-        var bullet = new DefaultBullet(x, y, rotation);
-        bullet.rotation = rotation;
+        var bullet = BulletFactory.createDefaultBullet(x, y, rotation);
         bullets.push(bullet);
     }
 

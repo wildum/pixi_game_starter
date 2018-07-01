@@ -20,11 +20,24 @@ class EventMovement extends Event {
 
     play() {
 
-        // if no collision move entitys
-        if (!check_wall_collisions(this.x, this.y, this.entity.radius)
-            && !check_units_collisions(this.entity.id, this.x, this.y, this.entity.radius)) {
-            this.entity.x = this.x;
-            this.entity.y = this.y;
+        if (this.entity.type == MovableEntityType.unit) {
+
+            // if no collision move entities
+            if (!check_wall_collisions(this.x, this.y, this.entity.radius)
+                && !check_units_collisions(this.entity.id, this.x, this.y, this.entity.radius)) {
+                this.entity.x = this.x;
+                this.entity.y = this.y;
+            }
+
+        } else if (this.entity.type == MovableEntityType.bullet && !dead_default_bullets_ids.has(this.entity.id)) {
+            if (check_wall_collisions(this.x, this.y, this.entity.radius)
+                || check_units_collisions(this.entity.id, this.x, this.y, this.entity.radius)) {
+                let bullet_index = bullets.map(function(b) {return b.id; }).indexOf(this.entity.id);
+                remove_default_bullet(bullet_index);
+            } else {
+                this.entity.x = this.x;
+                this.entity.y = this.y;
+            }
         }
 
     }

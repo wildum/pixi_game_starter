@@ -16,8 +16,8 @@ function getBulletGraphics(radius, color) {
 
 class Bullet extends MovableEntity {
 
-    constructor(x, y, t, radius, color, rotation) {
-        super(x, y);
+    constructor(id, x, y, t, radius, color, rotation) {
+        super(id, x, y);
         this.graphics = getBulletGraphics(radius, color);
         this.t = t;
         this.radius = radius;
@@ -26,6 +26,7 @@ class Bullet extends MovableEntity {
         this.graphics.y = y;
         this.rotation = rotation;
         this.speed = BULLET_DEFAULT_SPEED;
+        this.type = MovableEntityType.bullet;
     }
 
     set x(v) { if (this.graphics)this.graphics.x = v; }
@@ -50,41 +51,45 @@ class Bullet extends MovableEntity {
 
     }
 
-    destroy() {
-
-    }
-
 }
 
 class DefaultBullet extends Bullet {
-    constructor(x, y, orientation) {
-        super(x, y, (performance.now() + BULLET_DEFAULT_LIFETIME), BULLET_DEFAULT_RADIUS, BULLET_DEFAULT_COLOR, orientation);
+    constructor(id, x, y, orientation) {
+        super(id, x, y, (performance.now() + BULLET_DEFAULT_LIFETIME), BULLET_DEFAULT_RADIUS, BULLET_DEFAULT_COLOR, orientation);
     }
 }
 
 class BulletFactory {
+
     static createDefaultBullet(x, y, rotation) {
         let bullet;
         if (dead_default_bullets.length != 0) {
             bullet = dead_default_bullets.pop();
+            dead_default_bullets_ids.delete(bullet.id);
             bullet.t = performance.now() + BULLET_DEFAULT_LIFETIME;
             bullet.x = x;
             bullet.y = y;
             bullet.rotation = rotation;
             bulletLayer.addChild(bullet.graphics);
         } else {
-            bullet = new DefaultBullet(x, y, rotation);
+            bullet = new DefaultBullet(id_entities++, x, y, rotation);
         }
         return bullet;
     }
+
+}
+
+function remove_default_bullet(index) {
+    dead_default_bullets.push(bullets[index]);
+    dead_default_bullets_ids.add(bullets[index].id);
+    bulletLayer.removeChild(bullets[index].graphics);
+    bullets.splice(index, 1);
 }
 
 function update_bullets() {
     for (var i = bullets.length-1; i >= 0; i--) {
         if (bullets[i].t - performance.now() < 0) {
-            dead_default_bullets.push(bullets[i]);
-            bulletLayer.removeChild(bullets[i].graphics);
-            bullets.splice(i, 1);
+            remove_default_bullet(i);
         } else {
             bullets[i].move();
         }

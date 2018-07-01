@@ -37,7 +37,7 @@ function initTextures() {
 }
 initTextures();
 
-var id_unit;
+var id_entities = 0;
 
 let state;
 let player;
@@ -46,6 +46,7 @@ let unit;
 let events;
 let walls;
 let bullets;
+let dead_default_bullets_ids;
 let dead_default_bullets;
 
 function setup() {
@@ -55,14 +56,13 @@ function setup() {
   units = [];
   bullets = [];
   dead_default_bullets = [];
+  dead_default_bullets_ids = new Set();
 
-  id_unit = 0;
-
-  unit = new Unit(id_unit++, 400, 200, 50, 10, 0xFF0000);
+  unit = new Unit(id_entities++, 400, 200, 50, 10, 0xFF0000);
   player = new Player(unit);
 
   units.push(unit);
-  units.push(new Unit(id_unit++, 600, 200, 50, 10, 0x00FF00));
+  units.push(new Unit(id_entities++, 600, 200, 50, 10, 0x00FF00));
   walls.push(new Wall(200, 100, 200, 10));
 
   state = play;

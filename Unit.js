@@ -14,15 +14,15 @@ function getUnitGraphics(radius, color) {
 class Unit extends MovableEntity {
 
     constructor(id, x, y, health, radius, color) {
-        super(x, y);
+        super(id, x, y);
         this.graphics = getUnitGraphics(radius, color);
         this.graphics.x = x;
         this.graphics.y = y;
-        this.id = id;
         this.radius = radius;
         this.speed = UNIT_DEFAULT_SPEED;
         this.health = health;
         this.weapon = new DefaultWeapon();
+        this.type = MovableEntityType.unit;
     }
 
     set x(v) { if (this.graphics)this.graphics.x = v; }

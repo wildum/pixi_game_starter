@@ -58,11 +58,11 @@ function setup() {
   dead_default_bullets = [];
   dead_default_bullets_ids = new Set();
 
-  unit = new Unit(id_entities++, 400, 200, 50, 10, 0xFF0000);
+  unit = new Unit(id_entities++, 400, 200, 100, 10, 0xFF0000);
   player = new Player(unit);
 
   units.push(unit);
-  units.push(new Unit(id_entities++, 600, 200, 50, 10, 0x00FF00));
+  units.push(new Unit(id_entities++, 600, 200, 100, 10, 0xFF0000));
   walls.push(new Wall(200, 100, 200, 10));
 
   state = play;
@@ -77,8 +77,8 @@ function gameLoop(delta){
 }
 
 function play(delta) {
-  update_units();
   update_bullets();
+  update_units();
   play_events();
   events.length = 0;
 }

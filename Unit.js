@@ -63,7 +63,10 @@ class Unit extends MovableEntity {
         }
     }
 
-
+    take_damage(damage) {
+        this.health -= damage;
+        this.graphics.tint = 0xFFFF00;
+    }
     
     shoot(){
         this.weapon.shoot(this.rotation, this.x+Math.cos(this.rotation)*20, this.y+Math.sin(this.rotation)*20);
@@ -71,16 +74,27 @@ class Unit extends MovableEntity {
 
 }
 
-function update_units() {
-    units.forEach(unit => {
-        unit.update_orientation();
-        unit.move();
-    });
+function remove_unit(index) {
+    unitLayer.removeChild(units[index].graphics);
+    units.splice(index, 1);
 }
 
-function check_units_collisions(id, x, y, radius) {
+function update_units() {
+    for (var i = units.length-1; i >= 0; i--) {
+        if (units[i].health <= 0) {
+            remove_unit(i);
+        } else {
+            units[i].update_orientation();
+            units[i].move();
+        }
+    }
+}
+
+function check_units_collisions(entity, x, y) {
     for (var i = 0; i < units.length; i++) {
-        if (id != units[i].id && squareDist(x, y, units[i].x, units[i].y) < Math.pow(radius + units[i].radius, 2)) {
+        if (entity.id != units[i].id && squareDist(x, y, units[i].x, units[i].y) < Math.pow(entity.radius + units[i].radius, 2)) {
+                if (entity.type == "bullet")
+                    units[i].take_damage(entity.damage);
                 return true;
         }
     }

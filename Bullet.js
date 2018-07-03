@@ -2,6 +2,7 @@ const BULLET_DEFAULT_RADIUS = 3;
 const BULLET_DEFAULT_COLOR = 0xFFFF00;
 const BULLET_DEFAULT_LIFETIME = 1000; //ms
 const BULLET_DEFAULT_SPEED = 5;
+const BULLET_DEFAULT_DAMAGE = 10;
 
 
 function getBulletGraphics(radius, color) {
@@ -16,7 +17,7 @@ function getBulletGraphics(radius, color) {
 
 class Bullet extends MovableEntity {
 
-    constructor(id, x, y, t, radius, color, rotation) {
+    constructor(id, x, y, t, radius, color, rotation, damage) {
         super(id, x, y);
         this.graphics = getBulletGraphics(radius, color);
         this.t = t;
@@ -27,6 +28,7 @@ class Bullet extends MovableEntity {
         this.rotation = rotation;
         this.speed = BULLET_DEFAULT_SPEED;
         this.type = MovableEntityType.bullet;
+        this.damage = damage;
     }
 
     set x(v) { if (this.graphics)this.graphics.x = v; }
@@ -55,7 +57,7 @@ class Bullet extends MovableEntity {
 
 class DefaultBullet extends Bullet {
     constructor(id, x, y, orientation) {
-        super(id, x, y, (performance.now() + BULLET_DEFAULT_LIFETIME), BULLET_DEFAULT_RADIUS, BULLET_DEFAULT_COLOR, orientation);
+        super(id, x, y, (performance.now() + BULLET_DEFAULT_LIFETIME), BULLET_DEFAULT_RADIUS, BULLET_DEFAULT_COLOR, orientation, BULLET_DEFAULT_DAMAGE);
     }
 }
 
@@ -87,6 +89,12 @@ function remove_default_bullet(index) {
 }
 
 function update_bullets() {
+
+    // all units are red before moving the bullets
+    units.forEach(function(u) {
+        u.graphics.tint = 0xFF0000;
+    });
+
     for (var i = bullets.length-1; i >= 0; i--) {
         if (bullets[i].t - performance.now() < 0) {
             remove_default_bullet(i);

@@ -24,14 +24,14 @@ class EventMovement extends Event {
 
             // if no collision move entities
             if (!check_wall_collisions(this.x, this.y, this.entity.radius)
-                && !check_units_collisions(this.entity.id, this.x, this.y, this.entity.radius)) {
+                && !check_units_collisions(this.entity, this.x, this.y)) {
                 this.entity.x = this.x;
                 this.entity.y = this.y;
             }
 
         } else if (this.entity.type == MovableEntityType.bullet && !dead_default_bullets_ids.has(this.entity.id)) {
             if (check_wall_collisions(this.x, this.y, this.entity.radius)
-                || check_units_collisions(this.entity.id, this.x, this.y, this.entity.radius)) {
+                || check_units_collisions(this.entity, this.x, this.y)) {
                 let bullet_index = bullets.map(function(b) {return b.id; }).indexOf(this.entity.id);
                 remove_default_bullet(bullet_index);
             } else {

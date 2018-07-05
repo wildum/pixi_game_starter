@@ -1,20 +1,3 @@
-const BULLET_DEFAULT_RADIUS = 3;
-const BULLET_DEFAULT_COLOR = 0xFFFF00;
-const BULLET_DEFAULT_LIFETIME = 1000; //ms
-const BULLET_DEFAULT_SPEED = 5;
-const BULLET_DEFAULT_DAMAGE = 10;
-
-
-function getBulletGraphics(radius, color) {
-    var sprite = new PIXI.Sprite(discTexture);
-    sprite.scale.set((radius*2)/sprite.width);
-    bulletLayer.addChild(sprite);
-
-    sprite.tint = color;
-    sprite.anchor.set(0.5);
-    return sprite;
-}
-
 class Bullet extends MovableEntity {
 
     constructor(id, x, y, t, radius, color, rotation, damage) {
@@ -39,18 +22,10 @@ class Bullet extends MovableEntity {
     get rotation() {return this.graphics.rotation;}
 
     move() {
-
         // x and y of unit at the end of the frame
         let fx = this.x + Math.cos(this.rotation)*this.speed;
         let fy = this.y + Math.sin(this.rotation)*this.speed;
-        var t = 1/this.speed;
-
-        // create several movement events for a continuous displacement
-        while (t <= 1.0) {
-            events.push(new EventMovement(this, t, lerp(this.x, fx, t), lerp(this.y, fy, t)));
-            t+=1/this.speed;
-        }
-
+        super.create_move_events(fx, fy);
     }
 
 }

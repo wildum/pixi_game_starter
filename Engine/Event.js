@@ -1,6 +1,3 @@
-// 60 fps -> 1 frame = 100/6 ms
-const TIME_FRAME_MS = 1/60 * 1000
-
 class Event {
 
     constructor(entity, t) {

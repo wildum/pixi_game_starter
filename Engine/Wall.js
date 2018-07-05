@@ -1,12 +1,3 @@
-function getWallGraphics(x, y, width, height) {
-    var graphics = new PIXI.Graphics();
-    graphics.beginFill(0);
-    graphics.lineStyle(1, 0);
-    graphics.drawRect(x, y, width, height);
-    wallLayer.addChild(graphics);
-    return graphics;
-}
-
 class Wall {
 
     constructor(x, y, width, height) {

@@ -1,12 +1,8 @@
 class Weapon {
 
-    constructor() {
+    constructor() {}
 
-    }
-
-    shoot () {
-
-    }
+    shoot () {}
 
 }
 

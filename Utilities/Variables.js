@@ -1,0 +1,11 @@
+var discTexture;
+var id_entities = 0;
+var state;
+var player;
+var units;
+var unit;
+var events;
+var walls;
+var bullets;
+var dead_default_bullets_ids;
+var dead_default_bullets;

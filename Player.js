@@ -73,8 +73,6 @@ class Player {
             }
         };
 
-        app.stage.hitArea = new PIXI.Rectangle(0, 0, app.screen.width, app.screen.height);
-        app.stage.interactive = true;
         app.stage.pointerdown = function (e) {
             unit.shoot();
         }
